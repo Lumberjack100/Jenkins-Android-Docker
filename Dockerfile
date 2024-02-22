@@ -1,5 +1,5 @@
 # 使用最新的 jenkins/jenkins 镜像作为基础镜像
-FROM jenkins/jenkins:2.426.3-jdk17
+FROM jenkins/jenkins:2.440.1-jdk11
 
 # 切换为 root 用户，以便安装软件
 USER root
@@ -9,8 +9,6 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     unzip \
-    lib32stdc++6 \
-    lib32z1 \
     && rm -rf /var/lib/apt/lists/*
 
 # 设置Android SDK环境变量
@@ -32,18 +30,10 @@ RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
 RUN yes | sdkmanager --licenses && \
     sdkmanager \
     "platform-tools" \
-    "build-tools;34.0.0" \
     "build-tools;33.0.1" \
     "build-tools;32.0.0" \
-    "build-tools;31.0.0" \
-    "build-tools;30.0.3" \
-    "build-tools;29.0.2" \
-    "platforms;android-34" \
     "platforms;android-33" \
-    "platforms;android-32" \
-    "platforms;android-31" \
-    "platforms;android-30" \
-    "platforms;android-29"
+    "platforms;android-32" 
 
 # 返回到jenkins用户
 USER jenkins
